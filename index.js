@@ -1,10 +1,35 @@
-const http = require('http');
-const fs = require("fs");
+const productController = require('./controller/product');
+const express = require('express');
+const server = express();
+const router = express.Router();
 
-const file = fs.readFileSync("data.json",'utf-8');
-const server = http.createServer((req,res) => {
-    res.setHeader("Content-Type",'application/json')
-    res.end(file);
-})
+// **** Middleware Routing ****
+server.use('/products', router);
 
-server.listen(8080);
+// ****Middleware****
+server.use((req, res, next) => {
+    next();
+});
+
+// ***** API or Endpoints or Routes *****
+// Create POST /product
+router.post('/', productController.createProduct);
+
+// Read GET /products
+router.get('/', productController.getAllProducts)
+
+// Read GET /product/:id
+router.get('/:id', productController.getProduct);
+
+// Update PUT /product/:id
+router.put('/:id', productController.updateProduct); //Replace all properties of product
+
+// Update PATCH /product/:id
+router.patch('/:id', productController.replaceProduct); //Replace certain properties, rest keeps same
+
+//Delete DELETE /product/:id
+router.delete('/:id', productController.deleteProduct);
+
+server.listen(8080, () => {
+    console.log('server started');
+});
