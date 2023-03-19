@@ -12,6 +12,7 @@ async function main() {
 main().catch(err=>console.log(err));
 
 // Body Parser
+server.use(cors());
 server.use(express.json());
 
 server.use(express.static(process.env.PUBLIC_DIR));
@@ -40,7 +41,7 @@ router.get('/:id', productController.getProduct);
 router.put('/:id', productController.replaceProduct); //Replace all properties of product
 
 // Update PATCH /product/:id
-router.patch('/:id', productController.updateProduct); //Replace certain properties, rest keeps same
+router.patch('/:id', productController.updateProduct); //Replace with req.body properties, rest keeps same
 
 //Delete DELETE /product/:id
 router.delete('/:id', productController.deleteProduct);
