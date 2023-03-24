@@ -1,5 +1,4 @@
 const fs = require("fs");
-const file = JSON.parse(fs.readFileSync("data.json", 'utf-8'));
 const model = require('../model/productSchema');
 const Product = model.Product;
 
