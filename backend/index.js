@@ -19,6 +19,9 @@ server.use(express.json());
 server.use(express.static(process.env.PUBLIC_DIR));
 // **** Middleware Routing ****
 server.use('/products', router);
+server.use('*', (req,res)=> {
+    res.sendFile(__dirname+'build/index.html');
+})
 
 // ****Middleware****
 server.use((req, res, next) => {
