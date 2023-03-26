@@ -13,9 +13,15 @@ exports.createProduct = async (req, res) => {
 }
 
 exports.getAllProducts = async (req, res) => {
-    const result = await Product.find();
-    res.send(result);
+    try {
+        const result = await Product.find();
+        res.send(result);
+    } catch (error) {
+        return res.status(500).json({message: 'Reached but failed'})
+    }
+    
 }
+
 exports.getProduct = async (req, res) => {
     const id = req.params.id;
     const result = await Product.findById(id)
