@@ -10,8 +10,9 @@ function Product() {
     const [products, setProducts] = useState([]);
     async function fetchdata() {
         try {
-            const res = await axios.get('/products/');
+            const res = await axios.get('/products');
             const data = res.data;
+            console.log(data);
             setProducts(data);
         } catch (error) {
             console.error(error);

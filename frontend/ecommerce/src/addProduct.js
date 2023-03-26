@@ -11,7 +11,7 @@ function AddProduct() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await axios.post("/products/", addProduct);
+        const res = await axios.post("/products", addProduct);
         console.log(res.data);
     };
 
