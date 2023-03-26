@@ -9,8 +9,12 @@ function Product() {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     async function fetchdata() {
-        const res = await axios.get('/products/');
-        setProducts(res.data);
+        try {
+            const res = await axios.get('/products/');
+            setProducts(res.data);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     useEffect(() => {
@@ -34,7 +38,7 @@ function Product() {
             italic text-2xl font-semibold text-amber'>Products</div>
             <div className='grid grid-cols-3 px-4 mt-4 gap-4 mb-4'>
                 {
-                   products && products.map(p => {
+                    products && products.map(p => {
                         return (
                             <div className='w-auto bg-white rounded-md shadow-md overflow-hidden basis-1/4
                        transform hover:scale-105 transition duration-300 static' key={p._id} >
