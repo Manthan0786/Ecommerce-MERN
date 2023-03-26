@@ -9,18 +9,16 @@ function Product() {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     async function fetchdata() {
-        const res = await axios.get('http://localhost:8080/products/');
+        const res = await axios.get('/products/');
         setProducts(res.data);
-        console.log(products);
     }
+
     useEffect(() => {
         fetchdata();
-        
-        console.log(typeof(products));
     }, [])
 
     const handleDelete = async (id) => {
-        const res = await axios.delete(`http://localhost:8080/products/${id}`)
+        const res = await axios.delete(`/products/${id}`)
         if (res.data._id) {
             setProducts(products.filter(p => p._id !== res.data._id))
         }
