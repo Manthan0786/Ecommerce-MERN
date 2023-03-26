@@ -17,7 +17,7 @@
       },
       {
         "src": "/products/(.*)",
-        "dest": "build/"
+        "dest": "index.js"
       },
       {
         "src": "/",
