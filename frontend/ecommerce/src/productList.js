@@ -10,7 +10,7 @@ function Product() {
     const [products, setProducts] = useState([]);
     async function fetchdata() {
         try {
-            const res = await axios.get('http://localhost:8080/products/');
+            const res = await axios.get('/products/');
             const data = res.data;
             setProducts(data);
         } catch (error) {
@@ -23,7 +23,7 @@ function Product() {
     }, [])
 
     const handleDelete = async (id) => {
-        const res = await axios.delete(`http://localhost:8080/products/${id}`)
+        const res = await axios.delete(`/products/${id}`)
         if (res.data._id) {
             setProducts(products.filter(p => p._id !== res.data._id))
         }
