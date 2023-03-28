@@ -5,9 +5,10 @@ const server = express();
 const router = express.Router();
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 async function main() {
-	await mongoose.connect(process.env.MONGO_URL);
+	await mongoose.connect(path.resolve(__dirname,process.env.MONGO_URL));
     console.log("Database connected");
 }
 main().catch(err=>console.log(err));
@@ -20,7 +21,7 @@ server.use(express.static(process.env.PUBLIC_DIR));
 // **** Middleware Routing ****
 server.use('/products', router);
 server.use('*', (req,res)=> {
-    res.sendFile(__dirname+'build/index.html');
+    res.sendFile(path.resolve(__dirname,'build','index.html'));
 })
 
 // ****Middleware****
