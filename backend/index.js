@@ -26,9 +26,6 @@ server.use('*', (req,res)=> {
 
 // ****Middleware****
 server.use((req, res, next) => {
-    Object.keys(req.body).forEach(key => {
-        delete req.body[key];
-      });
     next();
 });
 
