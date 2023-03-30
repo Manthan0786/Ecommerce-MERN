@@ -48,7 +48,7 @@ router.put('/:id', productController.replaceProduct); //Replace all properties o
 // Update PATCH /product/:id
 router.patch('/:id', productController.updateProduct); //Replace with req.body properties, rest keeps same
 
-//Delete DELETE /product/:id
+// Delete DELETE /product/:id
 router.delete('/:id', productController.deleteProduct);
 
 server.listen(8080, () => {
