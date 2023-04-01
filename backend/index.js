@@ -17,7 +17,7 @@ main().catch(err=>console.log(err));
 server.use(cors());
 server.use(express.json());
 
-server.use(express.static("build"));
+server.use(express.static(process.env.PUBLIC_DIR));
 // **** Middleware Routing ****
 server.use('/products', router);
 server.use('*', (req,res)=> {
