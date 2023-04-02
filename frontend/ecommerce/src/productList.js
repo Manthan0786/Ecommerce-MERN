@@ -15,7 +15,7 @@ function Product() {
             console.log(data);
             setProducts(data);
         } catch (error) {
-            console.error(error);
+            console.error(error,"Error located in frontend");
         }
     }
 
