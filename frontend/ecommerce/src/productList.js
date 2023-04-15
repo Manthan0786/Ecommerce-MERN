@@ -4,13 +4,15 @@ import { Button } from '@mui/material';
 import Add from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Footer from './footer';
+import Header from './header';
 
 function Product() {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     async function fetchdata() {
         try {
-            const res = await axios.get('/products');
+            const res = await axios.get('http://localhost:8080/products');
             const data = res.data;
             console.log(data);
             setProducts(data);
@@ -24,7 +26,7 @@ function Product() {
     }, [])
 
     const handleDelete = async (id) => {
-        const res = await axios.delete(`/products/${id}`)
+        const res = await axios.delete(`http://localhost:8080/products/${id}`)
         if (res.data._id) {
             setProducts(products.filter(p => p._id !== res.data._id))
         }
@@ -36,8 +38,7 @@ function Product() {
 
     return (
         <React.Fragment>
-            <div className='z-10 w-full h-10 bg-gray text-center sticky top-0 left-0 right-0 opacity-100
-            italic text-2xl font-semibold text-amber'>Products</div>
+            <Header />
             <div className='grid grid-cols-3 px-4 mt-4 gap-4 mb-4'>
                 {
                     products && products.map(p => {
@@ -68,6 +69,7 @@ function Product() {
                     <Add />
                 </Button>
             </div>
+            <Footer />
         </React.Fragment>
     )
 }
