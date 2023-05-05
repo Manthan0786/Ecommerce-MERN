@@ -13,11 +13,18 @@ exports.createProduct = async (req, res) => {
 }
 
 exports.getAllProducts = async (req, res) => {
+    let query = Product.find();
     try {
-        const result = await Product.find();
-        res.send(result);
+        if (req.query) {
+            console.log(req.query);
+            const result = await query.sort({[req.query.sort]:req.query.order}).limit(req.query.limit);
+            res.send(result);
+        } else {
+            const result = await query.exec();
+            res.send(result);
+        }
     } catch (error) {
-        return res.status(500).json({message: 'Reached but failed'})
+        return res.status(500).json({ message: 'Reached but failed' })
     }
 }
 
