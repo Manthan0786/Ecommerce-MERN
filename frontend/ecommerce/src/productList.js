@@ -5,7 +5,7 @@ import Add from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Footer from './footer';
-import Header from './header';
+import Filter from './filter';
 
 function Product() {
     const navigate = useNavigate();
@@ -14,7 +14,6 @@ function Product() {
         try {
             const res = await axios.get('http://localhost:8080/products');
             const data = res.data;
-            console.log(data);
             setProducts(data);
         } catch (error) {
             console.error(error);
@@ -36,9 +35,13 @@ function Product() {
         navigate('/add');
     }
 
+    const handleSort = (sortedProducts) => {
+        setProducts(sortedProducts);
+      };
+
     return (
         <React.Fragment>
-            <Header />
+            <Filter onSort={handleSort}/>
             <div className='grid grid-cols-3 px-4 mt-4 gap-4 mb-4'>
                 {
                     products && products.map(p => {

@@ -16,8 +16,7 @@ exports.getAllProducts = async (req, res) => {
     let query = Product.find();
     try {
         if (req.query) {
-            console.log(req.query);
-            const result = await query.sort({[req.query.sort]:req.query.order}).limit(req.query.limit);
+            const result = await query.sort({[req.query.sort]:req.query.order});
             res.send(result);
         } else {
             const result = await query.exec();
