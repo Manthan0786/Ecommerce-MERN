@@ -10,7 +10,7 @@ function NavBar() {
     <nav className="bg-black z-10 text-amber sticky top-0 left-0 right-0 flex justify-center items-center w-full h-16 mb-4">
       <ul className="flex space-x-4">
         <li>
-          <Link to="/" >Home</Link>
+          <Link to="/products" >Home</Link>
         </li>
         {/* <li>
           <Link to="/products" component={Products}>Products</Link>
