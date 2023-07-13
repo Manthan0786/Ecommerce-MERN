@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [ "./src/*.{js,jsx,ts,tsx}"],
+  content: ["./src/*.{js,jsx,ts,tsx}", "./src/*/*.{js,jsx,ts,tsx}"],
   theme: {
     screens: {
       sm: '480px',
@@ -19,8 +19,11 @@ module.exports = {
       'gray': 'rgb(107 114 128)',
       'gray-light': '#d3dce6',
       'slate': 'rgb(248 250 252)',
-      'amber':'rgb(253 230 138)',
-      'black': '#1c1917'
+      'amber': 'rgb(253 230 138)',
+      'black': '#1c1917',
+      'sky-500': 'rgb(14 165 233)',
+      'sky-600': 'rgb(2 132 199)',
+      'sky-700': 'rgb(3 105 161)',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],

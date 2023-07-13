@@ -3,7 +3,7 @@ import Header from "./header";
 function Cart() {
     return (
         <>
-        <Header></Header>
+            <Header/>
             <h1>hi</h1>
         </>
     )

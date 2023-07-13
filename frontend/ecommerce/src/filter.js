@@ -4,14 +4,19 @@ import axios from "axios";
 function Filter({onSort}) {
     const [sortOrder, setSortOrder] = useState('');
     async function handleSortOrderChange(e) {
-        console.log(e.target.value);
+        
         try {
             if(e.target.value === "") {
                 return
             }
             setSortOrder(e.target.value);
+            const token = sessionStorage.getItem('token');
             const field = e.target.value.split('.');
-            const res = await axios.get(`http://localhost:8080/products?sort=${field[0]}&order=${field[1]}`);
+            const res = await axios.get(`http://localhost:8080/products?sort=${field[0]}&order=${field[1]}`, {
+                headers: {
+                    Authorization: token
+                }
+            });
             const data = res.data;
             onSort(data);
         } catch (error) {

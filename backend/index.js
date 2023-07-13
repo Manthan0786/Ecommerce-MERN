@@ -1,52 +1,70 @@
 require('dotenv').config()
 const productController = require('./controller/product');
+const userController = require('./controller/user');
 const express = require('express');
 const server = express();
-const router = express.Router();
+const productRouter = express.Router();
+const userRouter = express.Router();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 async function main() {
-	await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(process.env.MONGO_URL);
     console.log("Database connected");
 }
-main().catch(err=>console.log(err));
+main().catch(err => console.log(err));
 
 // Body Parser
 server.use(cors());
 server.use(express.json());
-server.use(express.static(path.resolve(__dirname,process.env.PUBLIC_DIR)));
-
-// **** Middleware Routing ****
-server.use('/products', router);
-server.use('*', (req,res)=> {
-    res.sendFile(path.resolve(__dirname,'build','index.html'));
-})
+server.use(express.static(path.resolve(__dirname, process.env.PUBLIC_DIR)));
 
 // ****Middleware****
-server.use((req, res, next) => {
-    next();
+const auth = ((req, res, next) => {
+    const token = req.get('authorization');
+    console.log(token);
+    try {
+        var decoded = jwt.verify(token, 'shhhhh');
+        if(decoded.email) {
+            next();
+        } else {
+            return res.status(401).json({ message: 'Authentication Error!!' });
+        }
+    } catch (error) {
+        return res.status(401).json({ message: 'Authentication Error!' });
+    }
 });
+
+// **** Middleware Routing ****
+server.use('/api', userRouter);
+server.use('/products', auth, productRouter);
+server.use('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+})
 
 // ***** API or Endpoints or Routes *****
 // Create POST /product
-router.post('/', productController.createProduct);
+userRouter.post('/signup', userController.createUser);
+userRouter.post('/login', userController.loginUser);
+productRouter.post('/', productController.createProduct);
+
 
 // Read GET /products
-router.get('/', productController.getAllProducts)
+productRouter.get('/', productController.getAllProducts)
 
 // Read GET /product/:id
-router.get('/:id', productController.getProduct);
+productRouter.get('/:id', productController.getProduct);
 
 // Update PUT /product/:id
-router.put('/:id', productController.replaceProduct); //Replace all properties of product
+productRouter.put('/:id', productController.replaceProduct); //Replace all properties of product
 
 // Update PATCH /product/:id
-router.patch('/:id', productController.updateProduct); //Replace with req.body properties, rest keeps same
+productRouter.patch('/:id', productController.updateProduct); //Replace with req.body properties, rest keeps same
 
 // Delete DELETE /product/:id
-router.delete('/:id', productController.deleteProduct);
+productRouter.delete('/:id', productController.deleteProduct);
 
 server.listen(8080, () => {
     console.log('server started');

@@ -1,4 +1,3 @@
-const fs = require("fs");
 const model = require('../model/productSchema');
 const Product = model.Product;
 
@@ -19,6 +18,7 @@ exports.getAllProducts = async (req, res) => {
             const result = await query.sort({[req.query.sort]:req.query.order});
             res.send(result);
         } else {
+            console.log('here')
             const result = await query.exec();
             res.send(result);
         }

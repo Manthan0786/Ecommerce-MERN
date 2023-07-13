@@ -3,16 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import AddProduct from './addProduct';
 import Cart from './cart';
+import LoginPage from './login/loginpage';
+import SignupPage from './login/signuppage';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/products",
     element: <App />
   },
   {
@@ -22,6 +21,14 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />
+  }, 
+  {
+    path: "/login",
+    element: <LoginPage />
+  },
+  {
+    path: "/signup",
+    element: <SignupPage/>
   }
 ]);
 

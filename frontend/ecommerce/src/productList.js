@@ -10,9 +10,14 @@ import Filter from './filter';
 function Product() {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
+    const token = sessionStorage.getItem('token');
     async function fetchdata() {
         try {
-            const res = await axios.get('http://localhost:8080/products');
+            const res = await axios.get('http://localhost:8080/products', {
+                headers: {
+                    Authorization: token
+                }
+            });
             const data = res.data;
             setProducts(data);
         } catch (error) {
@@ -25,7 +30,11 @@ function Product() {
     }, [])
 
     const handleDelete = async (id) => {
-        const res = await axios.delete(`http://localhost:8080/products/${id}`)
+        const res = await axios.delete(`http://localhost:8080/products/${id}`, {
+            headers: {
+                Authorization: token
+            }
+        })
         if (res.data._id) {
             setProducts(products.filter(p => p._id !== res.data._id))
         }
@@ -35,19 +44,23 @@ function Product() {
         navigate('/add');
     }
 
+    const handleAddToCart = () => {
+        // const res = await axios.a
+    }
+
     const handleSort = (sortedProducts) => {
         setProducts(sortedProducts);
-      };
+    };
 
     return (
         <React.Fragment>
-            <Filter onSort={handleSort}/>
+            <Filter onSort={handleSort} />
             <div className='grid grid-cols-3 px-4 mt-4 gap-4 mb-4'>
                 {
                     products && products.map(p => {
                         return (
                             <div className='w-auto bg-white rounded-md shadow-md overflow-hidden basis-1/4
-                       transform hover:scale-105 transition duration-300 static' key={p._id} >
+                       transform hover:scale-105 transition duration-300 static' key={p._id} onClick={handleAddToCart}>
                                 <img src={p.thumbnail} alt='product pic' className='w-full h-48 object-fit' />
                                 <div className="px-4 py-2">
                                     <div className='flex justify-between'>

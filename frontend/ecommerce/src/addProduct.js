@@ -11,7 +11,12 @@ function AddProduct() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await axios.post("/products", addProduct);
+        const token = sessionStorage.getItem('token');
+        const res = await axios.post("http://localhost:8080/products", addProduct, {
+            headers: {
+                Authorization: token
+            }
+        });
         console.log(res.data);
     };
 
