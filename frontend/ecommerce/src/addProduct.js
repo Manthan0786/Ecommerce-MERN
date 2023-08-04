@@ -1,6 +1,7 @@
 import { TextField, Button } from "@mui/material"
 import { useState } from "react";
 import axios from 'axios';
+import Header from "./header";
 
 function AddProduct() {
     const [addProduct, setAddProduct] = useState({});
@@ -22,6 +23,7 @@ function AddProduct() {
 
     return (
         <>
+            <Header />
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-4 bg-clip-border px-64 pt-4 bg-slate">
                     <TextField required id="title" label="Title" type="text" variant="outlined" onChange={handleChange} />

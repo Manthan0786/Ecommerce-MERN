@@ -17,6 +17,8 @@ module.exports = {
       'yellow': '#ffc82c',
       'gray-dark': '#273444',
       'gray': 'rgb(107 114 128)',
+      'gray-200': 'rgb(229 231 235)',
+      'emerald-600': 'rgb(5 150 105)',
       'gray-light': '#d3dce6',
       'slate': 'rgb(248 250 252)',
       'amber': 'rgb(253 230 138)',
@@ -24,6 +26,9 @@ module.exports = {
       'sky-500': 'rgb(14 165 233)',
       'sky-600': 'rgb(2 132 199)',
       'sky-700': 'rgb(3 105 161)',
+      'red-500': 'rgb(239 68 68)',
+      'red-600':	'rgb(220 38 38)',
+      'red-700':	'rgb(185 28 28)',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],

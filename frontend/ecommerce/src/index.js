@@ -3,15 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import AddProduct from './addProduct';
 import Cart from './cart';
 import LoginPage from './login/loginpage';
 import SignupPage from './login/signuppage';
 
+
+// useEffect(() => {
+//   const token = sessionStorage.getItem('token');
+//   if (token) {
+//     <Route path="/" element={<Navigate to="/home" />} />
+//   }
+// })
+
 const router = createBrowserRouter([
   {
-    path: "/products",
+    path: "/",
+    element: <Navigate to="/home" />
+  },
+  {
+    path: "/home",
     element: <App />
   },
   {
@@ -21,14 +33,14 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />
-  }, 
+  },
   {
     path: "/login",
     element: <LoginPage />
   },
   {
     path: "/signup",
-    element: <SignupPage/>
+    element: <SignupPage />
   }
 ]);
 

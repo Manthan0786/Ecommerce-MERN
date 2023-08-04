@@ -21,11 +21,10 @@ function LoginPage() {
             });
             const data = res.data;
             sessionStorage.setItem(Object.keys(data), Object.values(data));
-            window.location.href = '/products';
+            window.location.href = '/home';
         } catch(error) {
             console.log(error.response.data);
         }
-        
       };
 
     return (

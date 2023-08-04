@@ -1,10 +1,12 @@
 require('dotenv').config()
 const productController = require('./controller/product');
 const userController = require('./controller/user');
+const cartController = require('./controller/cart');
 const express = require('express');
 const server = express();
 const productRouter = express.Router();
 const userRouter = express.Router();
+const cartRouter = express.Router();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
@@ -23,8 +25,7 @@ server.use(express.static(path.resolve(__dirname, process.env.PUBLIC_DIR)));
 
 // ****Middleware****
 const auth = ((req, res, next) => {
-    const token = req.get('authorization');
-    console.log(token);
+    const token = req.get('authorization').split('Bearer ')[1];
     try {
         var decoded = jwt.verify(token, 'shhhhh');
         if(decoded.email) {
@@ -33,27 +34,30 @@ const auth = ((req, res, next) => {
             return res.status(401).json({ message: 'Authentication Error!!' });
         }
     } catch (error) {
-        return res.status(401).json({ message: 'Authentication Error!' });
+        return res.status(401).json({ message: 'User not Signed In!' });
     }
 });
 
 // **** Middleware Routing ****
 server.use('/api', userRouter);
+server.use('/cart', auth, cartRouter);
 server.use('/products', auth, productRouter);
+
 server.use('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html')); 
 })
 
 // ***** API or Endpoints or Routes *****
 // Create POST /product
 userRouter.post('/signup', userController.createUser);
 userRouter.post('/login', userController.loginUser);
+cartRouter.post('/:id', cartController.addToCart);
 productRouter.post('/', productController.createProduct);
 
 
 // Read GET /products
 productRouter.get('/', productController.getAllProducts)
-
+cartRouter.get('/', cartController.getCartProducts)
 // Read GET /product/:id
 productRouter.get('/:id', productController.getProduct);
 
@@ -65,6 +69,7 @@ productRouter.patch('/:id', productController.updateProduct); //Replace with req
 
 // Delete DELETE /product/:id
 productRouter.delete('/:id', productController.deleteProduct);
+cartRouter.delete('/:id', cartController.deleteProductFromCart)
 
 server.listen(8080, () => {
     console.log('server started');

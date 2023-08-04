@@ -67,7 +67,7 @@ exports.deleteProduct = async (req, res) => {
     // products.splice(prdIndex, 1)
     // res.status(201).json("Product Deleted");
     try {
-        const result = await Product.findByIdAndDelete(id)
+        const result = await Product.findByIdAndRemove(id)
         return res.status(201).json(result)
     } catch (error) {
         return res.status(400).json(error);

@@ -1,20 +1,12 @@
-import { Link, Routes, Route } from 'react-router-dom';
-// import Home from './Home';
-// import Products from './Products';
-import Cart from './cart';
-import AddProduct from './addProduct';
-import App from './App';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
   return (
-    <nav className="bg-black z-10 text-amber sticky top-0 left-0 right-0 flex justify-center items-center w-full h-16 mb-4">
+    <nav className="bg-black z-10 text-amber sticky top-0 left-0 right-24 flex justify-around items-center h-16">
       <ul className="flex space-x-4">
         <li>
-          <Link to="/products" >Home</Link>
+          <Link to="/home" >Home</Link>
         </li>
-        {/* <li>
-          <Link to="/products" component={Products}>Products</Link>
-        </li> */}
         <li>
           <Link to="/cart">Cart</Link>
         </li>
