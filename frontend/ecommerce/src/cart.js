@@ -7,7 +7,6 @@ function Cart() {
     const token = sessionStorage.getItem('token');
     const [cartProducts, setCartProducts] = useState([]);
     useEffect(() => {
-
         async function fetchCartProducts() {
             const res = await axios.get('http://localhost:8080/cart', {
                 headers: {
@@ -21,14 +20,18 @@ function Cart() {
     }, [token])
 
     const handleRemoveFromCart = async (id) => {
-        const res = await axios.delete(`http://localhost:8080/cart/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        const data = res.data;
-        const filteredproduct = cartProducts.filter((c) => c._id !== id)
-        setCartProducts(filteredproduct);
+        try {
+            const res = await axios.delete(`http://localhost:8080/cart/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            const data = res.data;
+            const filteredproduct = cartProducts.filter((c) => c._id !== id)
+            setCartProducts(filteredproduct);
+        } catch (error) {
+            alert(error.response.data);
+        }
     }
     return (
         <>
@@ -53,7 +56,7 @@ function Cart() {
                     }
                 </div> :
                 <div className="flex flex-col justify-center items-center p-14">
-                    <img className="w-44" src={cart}/>
+                    <img className="w-44" src={cart} />
                     <h1>Cart is Empty!</h1>
                 </div>
             }

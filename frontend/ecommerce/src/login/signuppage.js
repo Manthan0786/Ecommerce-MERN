@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
     const [credentials, setCredentials] = useState({ firstname: '', lastname: '', email: '', password: '' });
-
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
     const handleChange = (event) => {
         setCredentials({
             ...credentials,
@@ -20,12 +22,18 @@ function SignupPage() {
                 }
             });
             const data = res.data;
-            console.log(data);
-        } catch(error) {
-            console.log(error.response.data);
+            if (data) {
+                const { token } = data;
+                sessionStorage.setItem('token', token);
+                alert('User successfully created!')
+                setTimeout(()=>{
+                    navigate('/home');
+                }, 2000)
+            }
+        } catch (error) {
+            setError(error.response.data.error)
         }
-        
-      };
+    };
 
     return (
         <div className="flex justify-center items-center border-2 border-blue w-full min-h-screen">
@@ -33,8 +41,14 @@ function SignupPage() {
                 <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                     Sign up
                 </h1>
+
                 <form className="flex flex-col p-8" onSubmit={handleSubmit}>
                     <div className="mb-2">
+                        {error && (
+                            <div className="text-red-700 text-center">
+                                {error}
+                            </div>
+                        )}
                         <label
                             htmlFor="firstname"
                             className="block text-sm font-semibold text-gray-800"
@@ -105,7 +119,6 @@ function SignupPage() {
                     </div>
                 </form>
             </div>
-
         </div>
     )
 }

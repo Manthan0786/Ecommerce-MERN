@@ -7,15 +7,15 @@ const saltRounds = 10;
 exports.createUser = async (req, res) => {
     try {
         const user = new User(req.body);
-        const token = jwt.sign({ email: req.body.email }, 'shhhhh');
+        const token = jwt.sign({ email: req.body.email }, 'shhhhh', { expiresIn: 60 * 60 });
         user.token = token;
         const hash = bcrypt.hashSync(user.password, saltRounds);
         user.password = hash;
         const result = await user.save();
-        return res.status(201).json({ message: 'User created successfully' })
+        return res.status(201).json({ message: 'User created successfully', token })
     } catch (error) {
         if (error.code === 11000) {
-            return res.status(403).json({ error: 'User already exists' });
+            return res.status(403).json({ error: 'User already exists with this email' });
         } else {
             return res.status(500).json({ error: 'Internal server error' });
         }

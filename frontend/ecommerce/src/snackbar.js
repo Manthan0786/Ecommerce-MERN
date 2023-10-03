@@ -19,7 +19,6 @@ export default function SnackBar({setState, changeState}) {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
     changeState(false);
   };

@@ -23,7 +23,6 @@ function Product() {
                     }
                 });
                 const data = res.data;
-                console.log(data);
                 setProducts(data);
             } catch (error) {
                 console.error(error);
